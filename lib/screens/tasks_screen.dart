@@ -85,7 +85,14 @@ class _TaskeScreenState extends State<TaskeScreen> {
                   topRight: Radius.circular(20),
                 ),
               ),
-              child: TasksList(tasks: tasksShow),
+              child: TasksList(
+                tasks: tasksShow,
+                removeTask: (int index) {
+                  setState(() {
+                    tasksShow.remove(tasksShow[index]);
+                  });
+                },
+              ),
             ),
           ),
         ],
