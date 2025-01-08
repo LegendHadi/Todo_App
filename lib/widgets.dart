@@ -13,14 +13,6 @@ class TasksList extends StatelessWidget {
         return ListView.builder(
           itemBuilder: (context, index) {
             return TaskTile(
-              isChecked: taskData.tasks[index].isDone,
-              taskTitle: taskData.tasks[index].name,
-              checkboxCallback: () {
-                // setState(() {
-                //   widget.tasks[index].toggleDone();
-                // });
-              },
-              removeTask: removeTask,
               index: index,
             );
           },
@@ -32,41 +24,32 @@ class TasksList extends StatelessWidget {
 }
 
 class TaskTile extends StatelessWidget {
-  final bool isChecked;
-  final String taskTitle;
   final int index;
-  final Function checkboxCallback;
-  final Function removeTask;
   const TaskTile({
     super.key,
-    required this.isChecked,
-    required this.taskTitle,
-    required this.checkboxCallback,
     required this.index,
-    required this.removeTask,
   });
 
   @override
   Widget build(BuildContext context) {
+    final task = Provider.of<TaskData>(context).tasks[index];
     return ListTile(
       title: Text(
-        taskTitle,
+        task.name,
         style: TextStyle(
-          decoration: isChecked ? TextDecoration.lineThrough : null,
+          decoration: task.isDone ? TextDecoration.lineThrough : null,
         ),
       ),
       trailing: Checkbox(
         activeColor: Colors.lightBlueAccent,
-        value: isChecked,
+        value: task.isDone,
         onChanged: (value) {
-          checkboxCallback();
+          Provider.of<TaskData>(context, listen: false).checkOn(index);
         },
       ),
       leading: IconButton(
         icon: const Icon(Icons.delete),
-        onPressed: () {
-          removeTask(index);
-        },
+        onPressed: () {},
       ),
     );
   }
