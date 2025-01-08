@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/widgets.dart';
 import 'package:todo_app/screens/add_task_screen.dart';
-import 'package:todo_app/models/task.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/models/task_data.dart';
 
-class TaskeScreen extends StatefulWidget {
+class TaskeScreen extends StatelessWidget {
   const TaskeScreen({super.key});
 
-  @override
-  State<TaskeScreen> createState() => _TaskeScreenState();
-}
-
-class _TaskeScreenState extends State<TaskeScreen> {
-  List<Task> tasksShow = [
-    Task(name: 'buy milk'),
-    Task(name: 'buy eggs'),
-    Task(name: 'buy bread'),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,14 +18,7 @@ class _TaskeScreenState extends State<TaskeScreen> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (context) => AddTaskScreen(
-              addNewTask: (String value) {
-                setState(() {
-                  tasksShow.add(Task(name: value));
-                });
-                Navigator.pop(context);
-              },
-            ),
+            builder: (context) => const AddTaskScreen(),
           );
         },
         child: const Icon(Icons.add),
@@ -66,7 +50,7 @@ class _TaskeScreenState extends State<TaskeScreen> {
                   ),
                 ),
                 Text(
-                  '${tasksShow.length} Tasks',
+                  '${Provider.of<TaskData>(context).taskCount} Tasks',
                   style: const TextStyle(
                     fontSize: 18,
                     color: Colors.white,
@@ -86,11 +70,10 @@ class _TaskeScreenState extends State<TaskeScreen> {
                 ),
               ),
               child: TasksList(
-                tasks: tasksShow,
                 removeTask: (int index) {
-                  setState(() {
-                    tasksShow.remove(tasksShow[index]);
-                  });
+                  // setState(() {
+                  //   tasksShow.remove(tasksShow[index]);
+                  // });
                 },
               ),
             ),

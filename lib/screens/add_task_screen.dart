@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/models/task_data.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  final Function addNewTask;
-  const AddTaskScreen({super.key, required this.addNewTask});
+  const AddTaskScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +28,19 @@ class AddTaskScreen extends StatelessWidget {
             autofocus: true,
             textAlign: TextAlign.center,
             onChanged: (value) {
-              newTaskTitle= value;
+              newTaskTitle = value;
             },
           ),
           ElevatedButton(
             onPressed: () {
-              addNewTask(newTaskTitle);
+              Provider.of<TaskData>(context, listen: false).addTask(newTaskTitle);
+              Navigator.pop(context);
             },
             style: ButtonStyle(
               backgroundColor: WidgetStateProperty.all(Colors.lightBlueAccent),
-              padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 40, vertical: 10))
+              padding: WidgetStateProperty.all(
+                const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+              ),
             ),
             child: const Text(
               'Add',
