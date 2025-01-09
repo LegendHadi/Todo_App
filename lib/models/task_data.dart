@@ -15,8 +15,14 @@ class TaskData extends ChangeNotifier {
     tasks.add(Task(name: newTask));
     notifyListeners();
   }
-  void checkOn(int index){
+
+  void checkOn(int index) {
     tasks[index].toggleDone();
+    notifyListeners();
+  }
+
+  void deleteTask(int index) {
+    tasks.remove(tasks[index]);
     notifyListeners();
   }
 }

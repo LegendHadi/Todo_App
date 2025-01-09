@@ -69,13 +69,7 @@ class TaskeScreen extends StatelessWidget {
                   topRight: Radius.circular(20),
                 ),
               ),
-              child: TasksList(
-                removeTask: (int index) {
-                  // setState(() {
-                  //   tasksShow.remove(tasksShow[index]);
-                  // });
-                },
-              ),
+              child: const TasksList(),
             ),
           ),
         ],

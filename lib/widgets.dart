@@ -3,8 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_data.dart';
 
 class TasksList extends StatelessWidget {
-  final Function removeTask;
-  const TasksList({super.key, required this.removeTask});
+  const TasksList({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +48,9 @@ class TaskTile extends StatelessWidget {
       ),
       leading: IconButton(
         icon: const Icon(Icons.delete),
-        onPressed: () {},
+        onPressed: () {
+          Provider.of<TaskData>(context, listen: false).deleteTask(index);
+        },
       ),
     );
   }
